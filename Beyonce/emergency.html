@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="emergency.css" />
+    <title>Vitals Ease</title>
+    
+    <style>
+        /* CSS for styling the emergency contacts page */
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #f1f1f1;
+        }
+    
+        header {
+          
+          color: #fff;
+          text-align: center;
+          padding: 20px;
+          font-size: 24px;
+        }
+        .container {
+          max-width: 800px;
+          margin: 20px auto;
+          background-color:transparent;
+          backdrop-filter: blur(20px);
+        box-shadow: 0 0 30px rgba(0,0,0,.5);
+          border-radius:20px;
+          border-color: black;
+          padding: 20px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .container .button {
+        
+        padding: 14px 20px;
+        background:rgb(68, 0, 255);
+        color: #fff;
+        border-radius:60px;
+        border-color:white;
+        cursor: pointer;
+        margin-top:5px;
+      }
+    
+      .container .button:hover {
+        background-color:rgb(34, 2, 85);
+        color:white;
+      }
+    
+        
+    
+        table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+    
+        th, td {
+          border: 1px solid #ccc;
+          padding: 10px;
+          text-align: left;
+        }
+    
+        th {
+          background-color: #333;
+          color: #fff;
+        }
+        /* Style for the "Add Contact" button */
+        button#add-contact-button {
+          background-color: #007bff; /* Blue background color */
+          color: #fff; /* White text color */
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          font-size:large;
+        }
+    
+        button#add-contact-button:hover {
+          background-color: #0056b3; /* Darker blue on hover */
+        }
+        /* Style for the "Call" button with icon */
+        .call-button {
+          background-color: #4CAF50; /* Green background color */
+          color: #fff; /* White text color */
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          padding: 5px 10px;
+        }
+    
+        .call-button:hover {
+          background-color: #45a049; /* Darker green on hover */
+        }
+      </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo"><a href="#">Vitals Ease</a></div>
+            <ul class="links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="emergency.html">Emergency Contacts</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="doctor.html">Doctor</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>      
+            <a href="#" class="action_btn">Get Started</a>
+            <div class="toggle_btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>  
+        </div>
+        <div class="dropdown_menu">
+            <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="emergency.html">Emergency Contacts</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="doctor.html">Doctor</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="#" class="action_btn">Get Started</a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Add Emergency Contact</h2>
+        <form id="contact-form">
+          <label for="contact-name">Contact Name:</label>
+          <input type="text" id="contact-name" required>
+          <br>
+          <label for="contact-phone">Phone Number:</label>
+          <input type="tel" id="contact-phone" required>
+          <br>
+          <label for="contact-email">Email:</label>
+          <input type="email" id="contact-email">
+          <br>
+          <button type="button" id="add-contact-button" onclick="addContact()">Add Contact</button>
+        </form>
+        <h2>Emergency Contacts</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Contact Name</th>
+              <th>Phone Number</th>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="contact-list">
+            <!-- Contact entries will be added here -->
+          </tbody>
+        </table>
+      </div>
+      <script>
+        function addContact() {
+          const name = document.getElementById("contact-name").value;
+          const phone = document.getElementById("contact-phone").value;
+          const email = document.getElementById("contact-email").value;
+    
+          if (name && phone) {
+            const contactList = document.getElementById("contact-list");
+            const newRow = contactList.insertRow(-1);
+    
+            const nameCell = newRow.insertCell(0);
+            const phoneCell = newRow.insertCell(1);
+            const emailCell = newRow.insertCell(2);
+            const actionCell = newRow.insertCell(3);
+    
+            nameCell.innerHTML = name;
+            phoneCell.innerHTML = phone;
+            emailCell.innerHTML = email || "N/A";
+    
+            const callButton = document.createElement("button");
+            callButton.className = "call-button";
+            callButton.innerHTML = '<i class="fas fa-phone"></i>'; // Font Awesome phone icon
+            callButton.addEventListener("click", () => makeCall(phone));
+            actionCell.appendChild(callButton);
+            document.getElementById("contact-form").reset();
+          }
+        }
+    
+        function makeCall(phoneNumber) {
+          // Use the tel: URL scheme to initiate a phone call
+          window.location.href = "tel:" + phoneNumber;
+        }
+      </script>
+    </body>
+    </html>
